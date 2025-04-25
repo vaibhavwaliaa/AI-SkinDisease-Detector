@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skin Disease Prediction</title>
+    <style>
+        :root {
+    --navy-900: #050d16;
+    --navy-800: #132639;
+    --navy-700: #1a2a3a;
+    --neon-blue: #00ffff;
+    --text-color: #e0f0ff;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--navy-900);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+.container {
+    max-width: 800px;
+    margin: 50px auto 0; /* Adjusted for fixed header & marquee */
+    background-color: var(--navy-800);
+    border-radius: 10px;
+    padding: 30px;
+    /* box-shadow: 0 0 20px rgba(0, 255, 255, 0.1); */
+}
+.container button{
+    border-radius: 50px;
+}
+.container button:hover{
+    background-color: #3bbad7;
+}
+
+h1 {
+    text-align: center;
+    color: var(--neon-blue);
+    font-size: 2.5em;
+    margin-bottom: 30px;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+header h1 {
+    color: #fff;
+    font-size: 28px;
+    font-weight: 700;
+    margin-left: 20px;
+}
+
+/* Existing Styles */
+
+nav {
+    background: linear-gradient(to right, #4e8896, #1f3f6c); /* Gradient background */
+    padding: 8px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 30px;
+    transition: background 0.3s ease-in-out; /* Smooth transition for hover effect */
+}
+
+/* Hide menu items on mobile */
+nav ul {
+    display: flex;
+    list-style: none;
+    margin-top: 0;
+}
+
+nav ul li {
+    margin: 0 20px;
+}
+
+/* Hamburger Icon */
+.hamburger {
+    display: none; /* Hide by default */
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.hamburger div {
+    width: 30px;
+    height: 4px;
+    background-color: #fff;
+    transition: transform 0.3s ease;
+}
+
+/* Media Query for smaller screens */
+@media screen and (max-width: 768px) {
+    /* Show the hamburger menu */
+    .hamburger {
+        display: flex;
+    }
+
+    /* Hide the navigation items initially */
+    nav ul {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px; /* Adjust according to your header height */
+        right: 20px;
+        background-color: #00d2ff;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        width: 200px;
+    }
+
+    /* Show the navigation items when the menu is toggled */
+    nav ul.active {
+        display: flex;
+    }
+
+    nav ul li {
+        margin: 15px 0;
+    }
+}
+
+/* Additional Styling for the Hamburger Menu */
+nav a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 0 20px;
+    font-weight: 500;
+    position: relative;
+    transition: all 0.3s ease-in-out; /* Smooth transition on hover */
+}
+
+nav a:hover {
+    transform: translateY(-5px); /* Slight upward movement on hover */
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #fff; /* Neon Pink underline */
+    bottom: -5px;
+    left: 0;
+    transform: scaleX(0);
+    transition: transform 0.3s ease-in-out; /* Smooth scaling effect */
+}
+
+nav a:hover::after {
+    transform: scaleX(1); /* Underline appears on hover */
+}
+
+
+/* Add some padding to the nav container to make it look spacious */
+header {
+    padding: 10px 0;
+    height: 51px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(34, 129, 198, 0.2);
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-left: 3vh;
+}
+
+.header-logo img {
+    width: 90px; /* Set the size of the image */
+    height: 50px; /* Set the size of the image */
+    object-fit: cover; /* Ensure the image covers the circle */
+    transition: transform 0.3s ease-in-out; /* Smooth scaling effect */
+    margin-right: 0;
+    margin-bottom: 3vh;
+}
+
+.header-logo:hover img {
+    transform: scale(1.1); /* Slightly enlarge the image on hover */
+}
+
+.header-logo h1 {
+    color: #fff;
+    font-size: 28px;
+    font-weight: 700;
+    margin-left: -25px;
+}
+        /* Marquee */
+        .marquee-container {
+            margin-top: 70px; /* Adjusted to push below header */
+            text-align: center;
+            overflow: hidden;
+            padding: 8px 0;
+            background-color: var(--navy-800);
+            border-bottom: 2px solid var(--neon-blue);
+        }
+
+        .marquee-container marquee {
+            color: var(--neon-blue);
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+
+        input[type="file"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            background-color: var(--navy-700);
+            border: 2px solid var(--neon-blue);
+            border-radius: 50px;
+            color: var(--text-color);
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: var(--neon-blue);
+            color: var(--navy-900);
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #33ffff;
+        }
+
+        #result {
+            margin-top: 30px;
+            display: none;
+        }
+
+        #result h2 {
+            color: var(--neon-blue);
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        #result img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+        }
+
+        .info {
+            background-color: var(--navy-700);
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info h3 {
+            color: var(--neon-blue);
+            margin-top: 0;
+        }
+
+        #diseaseName, #confidence {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+
+        #diseaseName strong, #confidence strong {
+            color: var(--neon-blue);
+        }
+        #uploadedImage {
+    width: 300px;  /* Adjust width */
+    height: auto;  /* Maintain aspect ratio */
+    display: block;
+    margin: 10px auto; /* Center the image */
+    border-radius: 10px; /* Optional: adds rounded corners */
+    border: 2px solid #ccc; /* Optional: adds a border */
+}
+#diseaseName span {
+    color: white; 
+    font-weight: bold;
+}
+        #loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #loading .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid #ffffff;
+            width: 40px;
+            height: 40px;
+            animation: spin 3s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        #bgCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    background: radial-gradient(circle at center, #0f172a 10%, #020617 80%);
+}
+input[type="tel"] {
+            width: 100%;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid #64ffda;
+            border-radius: 50px;  /* Round the corners */
+            color: #e6f1ff;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        input[type="tel"]:focus {
+            border-color: #45c7a9;
+            background-color: rgba(255, 255, 255, 0.2);  /* Darken the background when focused */
+            outline: none;
+        }
+
+        input[type="tel"]::placeholder {
+            color: rgba(230, 241, 255, 0.7);  /* Lighter placeholder color */
+        }
+
+    </style>
+</head>
+<body>
+    <canvas id="bgCanvas"></canvas>
+    <header>
+        <div class="header-logo">
+            <img src="../static/images/D.png" alt="Photo" />
+            <h1>ermaSense.ai</h1>
+        </div>
+        <nav>
+            <div class="hamburger" onclick="toggleMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <ul>
+                <li><a href="/">Predict</a></li>
+                <li><a href="/location">Search Dermatologists</a></li>
+                <li><a href="/contact">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>    
+
+<div class="marquee-container">
+    <marquee>⚠️ AI predictions can be incorrect. Consult a dermatologist for an accurate diagnosis. ⚠️</marquee>
+</div>
+
+<div class="container">
+    <h1>Skin Disease Detection</h1>
+    <input type="file" id="fileInput" accept="image/*">
+    <input type="tel" name="phone" placeholder="Enter your phone number (If You Required SMS)">
+    <button onclick="predictDisease()">Analyze Image</button>
+
+    <div id="loading" style="display: none;">
+        <p>Analyzing Image... Please wait.</p>
+        <div class="spinner"></div>
+    </div>    
+
+    <div id="result">
+        <h2 id="diseaseName"><strong>Predicted Disease:</strong> <span></span></h2>
+        <img id="uploadedImage" src="/placeholder.svg" alt="Uploaded Image">
+
+        <div class="info">
+            <h3>Description</h3>
+            <p id="description"></p>
+        </div>
+        <div class="info">
+            <h3>Cause</h3>
+            <p id="cause"></p>
+        </div>
+        <div class="info">
+            <h3>Treatment</h3>
+            <p id="treatment"></p>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+    const diseaseData = {
+    "Acne": {
+        "description": "A common skin condition that occurs when hair follicles become clogged with oil and dead skin cells, leading to pimples, blackheads, and whiteheads.",
+        "cause": "Hormonal changes, excessive oil production, bacteria, and inflammation.",
+        "treatment": "Use topical treatments (benzoyl peroxide, salicylic acid), oral medications, and maintain proper skincare."
+    },
+    "Actinic Keratosis": {
+        "description": "A rough, scaly patch on the skin caused by years of sun exposure, which may develop into skin cancer if untreated.",
+        "cause": "Long-term exposure to ultraviolet (UV) light from the sun or tanning beds.",
+        "treatment": "Cryotherapy, laser therapy, chemical peels, and topical medications."
+    },
+    "Benign Tumors": {
+        "description": "Non-cancerous growths on or under the skin, usually harmless but sometimes requiring removal.",
+        "cause": "Genetic factors, infections, or environmental exposure.",
+        "treatment": "Monitoring, surgical removal, or laser therapy if necessary."
+    },
+    "Bullous": {
+        "description": "A skin condition that causes large, fluid-filled blisters, often due to immune system disorders.",
+        "cause": "Autoimmune diseases, infections, or allergic reactions.",
+        "treatment": "Corticosteroids, immunosuppressants, and proper wound care."
+    },
+    "Candidiasis": {
+        "description": "A fungal infection caused by Candida yeast, often affecting warm, moist areas of the body.",
+        "cause": "Weakened immune system, diabetes, prolonged antibiotic use, and poor hygiene.",
+        "treatment": "Antifungal creams, oral antifungal medications, and maintaining proper hygiene."
+    },
+    "Drug Eruption": {
+        "description": "An adverse skin reaction caused by medications, leading to rashes, redness, or blisters.",
+        "cause": "Allergic reaction or sensitivity to certain drugs.",
+        "treatment": "Stopping the medication, antihistamines, corticosteroids, and hydration."
+    },
+    "Eczema": {
+        "description": "A condition that makes the skin red, inflamed, and itchy.",
+        "cause": "Genetics, allergens, irritants, and environmental triggers.",
+        "treatment": "Moisturizers, corticosteroids, and avoiding known triggers."
+    },
+    "Hives (Urticaria)": {
+        "description": "A skin reaction that causes itchy welts due to an allergic reaction or unknown triggers.",
+        "cause": "Allergens, stress, infections, or medications.",
+        "treatment": "Antihistamines, corticosteroids, and avoiding allergens."
+    },
+    "Infestations Bites": {
+        "description": "Skin irritation and rashes caused by insect bites or parasitic infections such as scabies or lice.",
+        "cause": "Bites from mosquitoes, fleas, ticks, mites, or lice infestations.",
+        "treatment": "Topical creams, antihistamines, and proper hygiene to prevent further infestations."
+    },
+    "Lichen": {
+        "description": "A skin condition characterized by thick, scaly patches that may be itchy or painful.",
+        "cause": "Autoimmune reactions, chronic inflammation, or unknown triggers.",
+        "treatment": "Corticosteroid creams, antihistamines, and phototherapy."
+    },
+    "Lupus": {
+        "description": "An autoimmune disease that affects the skin, causing rashes and sensitivity to sunlight.",
+        "cause": "Genetic predisposition, environmental factors, and immune system dysfunction.",
+        "treatment": "Anti-inflammatory drugs, immunosuppressants, and avoiding sunlight exposure."
+    },
+    "Melanoma": {
+        "description": "A serious and aggressive form of skin cancer that develops from melanocytes.",
+        "cause": "Excessive UV exposure, genetic mutations, and fair skin type.",
+        "treatment": "Surgical removal, chemotherapy, immunotherapy, and radiation therapy."
+    },
+    "Moles": {
+        "description": "Clusters of pigmented skin cells that appear as small, dark brown spots.",
+        "cause": "Genetic factors, sun exposure, and hormonal changes.",
+        "treatment": "Usually harmless, but removal is recommended if a mole changes in size, shape, or color."
+    },
+    "Psoriasis": {
+        "description": "A chronic autoimmune skin disease that speeds up the life cycle of skin cells, causing scaly patches.",
+        "cause": "Immune system dysfunction, genetic factors, and environmental triggers.",
+        "treatment": "Topical treatments, phototherapy, and systemic medications."
+    },
+    "Rosacea": {
+        "description": "A chronic skin condition causing redness, visible blood vessels, and bumps on the face.",
+        "cause": "Unknown, but triggers include sun exposure, stress, spicy foods, and alcohol.",
+        "treatment": "Topical treatments, antibiotics, laser therapy, and avoiding triggers."
+    },
+    "Seborrh Keratoses": {
+        "description": "Non-cancerous, wart-like growths that appear on the skin, often with age.",
+        "cause": "Genetics and aging.",
+        "treatment": "Cryotherapy, laser removal, or electrosurgery if necessary."
+    },
+    "Skin Cancer": {
+        "description": "Uncontrolled growth of abnormal skin cells, often due to sun exposure.",
+        "cause": "UV radiation, genetics, and weakened immune system.",
+        "treatment": "Surgery, chemotherapy, radiation therapy, and immunotherapy."
+    },
+    "Sunlight Damage": {
+        "description": "Skin damage caused by prolonged exposure to UV rays, leading to premature aging and increased cancer risk.",
+        "cause": "Excessive sun exposure, tanning beds, and lack of sunscreen use.",
+        "treatment": "Sunscreen, antioxidants, retinoids, and skin-repairing treatments."
+    },
+    "Tinea": {
+        "description": "A fungal infection affecting the skin, scalp, or nails, also known as ringworm.",
+        "cause": "Fungal overgrowth due to moisture, poor hygiene, or direct contact.",
+        "treatment": "Antifungal creams, oral antifungal medications, and maintaining dry skin."
+    },
+    "Unknown or No Disease": {
+        "description": "No recognizable skin disease detected.",
+        "cause": "N/A",
+        "treatment": "Consult a dermatologist if symptoms persist."
+    },
+    "Vascular Tumors": {
+        "description": "Abnormal growth of blood vessels in the skin, which may be benign or malignant.",
+        "cause": "Genetic mutations, environmental triggers, or unknown causes.",
+        "treatment": "Monitoring, laser therapy, or surgical removal if necessary."
+    },
+    "Vasculitis": {
+        "description": "Inflammation of blood vessels, leading to skin rashes, ulcers, or organ damage.",
+        "cause": "Autoimmune conditions, infections, or allergic reactions.",
+        "treatment": "Corticosteroids, immunosuppressants, and managing underlying conditions."
+    },
+    "Vitiligo": {
+        "description": "A condition where the skin loses its pigment cells, causing white patches.",
+        "cause": "Autoimmune disorder, genetic factors, and unknown triggers.",
+        "treatment": "Topical corticosteroids, light therapy, and skin grafting."
+    },
+    "Warts": {
+        "description": "Small, rough skin growths caused by the human papillomavirus (HPV).",
+        "cause": "Direct contact with HPV, weakened immune system.",
+        "treatment": "Cryotherapy, salicylic acid, and laser removal."
+    }
+};
+
+function predictDisease() {
+    let fileInput = document.getElementById("fileInput");
+    let file = fileInput.files[0];
+    let phoneNumber = document.querySelector("input[name='phone']").value.trim();
+
+    if (!file) {
+        alert("Please upload an image first.");
+        return;
+    }
+
+    let formData = new FormData();
+    formData.append("file", file);
+
+    // Show loading spinner and hide results
+    document.getElementById("loading").style.display = "block";
+    document.getElementById("result").style.display = "none";
+
+    fetch("http://127.0.0.1:5000/predict", {  // Ensure Flask is running on port 5000
+        method: "POST",
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("result").style.display = "block";
+
+        if (data.error) {
+            throw new Error(data.error); // Handle backend errors
+        }
+
+        document.getElementById("uploadedImage").src = data.image_path;
+        document.querySelector("#diseaseName span").innerText = data.disease;
+
+        if (diseaseData[data.disease]) {
+            document.getElementById("description").innerText = diseaseData[data.disease].description;
+            document.getElementById("cause").innerText = diseaseData[data.disease].cause;
+            document.getElementById("treatment").innerText = diseaseData[data.disease].treatment;
+
+            // Send SMS only if phone number is entered
+            if (phoneNumber) {
+                sendSMS(phoneNumber, data.disease, diseaseData[data.disease]);
+            }
+        } else {
+            document.getElementById("description").innerText = "No description available.";
+            document.getElementById("cause").innerText = "No cause information available.";
+            document.getElementById("treatment").innerText = "No treatment information available.";
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("result").style.display = "none";  // Hide results on failure
+        alert("Error analyzing image. Please try again.");
+    });
+}
+
+
+function sendSMS(phone, disease, details) {
+    fetch("/send_sms", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            phone: phone,
+            disease: disease,
+            description: details.description,
+            cause: details.cause,
+            treatment: details.treatment
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === "success") {
+            alert("SMS sent successfully!");
+        } else {
+            alert("Failed to send SMS.");
+        }
+    })
+    .catch(error => console.error("Error sending SMS:", error));
+}
+let scene, camera, renderer, particles;
+
+    function init() {
+        scene = new THREE.Scene();
+        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
+        camera.position.z = 50;
+
+        renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("bgCanvas"), alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 1000;
+        const posArray = new Float32Array(particlesCount * 3);
+
+        for (let i = 0; i < particlesCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 200;
+        }
+
+        particlesGeometry.setAttribute("position", new THREE.BufferAttribute(posArray, 3));
+
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.6,
+            color: "#ffffff",
+            transparent: true,
+            opacity: 0.8,
+            blending: THREE.AdditiveBlending
+        });
+
+        particles = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particles);
+
+        animate();
+    }
+
+    function animate() {
+        requestAnimationFrame(animate);
+
+        // Smooth natural floating effect
+        particles.rotation.y += 0.0005;
+        particles.rotation.x += 0.0005;
+
+        const positions = particles.geometry.attributes.position.array;
+        for (let i = 0; i < positions.length; i += 3) {
+            positions[i] += Math.sin(i * 0.02 + performance.now() * 0.00005) * 0.03;
+            positions[i + 1] += Math.cos(i * 0.02 + performance.now() * 0.00005) * 0.03;
+        }
+        particles.geometry.attributes.position.needsUpdate = true;
+
+        renderer.render(scene, camera);
+    }
+
+    window.addEventListener("resize", () => {
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+    });
+
+    init();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,191 @@
+:root {
+    --navy-900: #050d16;
+    --navy-800: #132639;
+    --navy-700: #1a2a3a;
+    --neon-blue: #00ffff;
+    --text-color: #e0f0ff;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--navy-900);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+.container {
+    max-width: 800px;
+    margin: 50px auto 0; /* Adjusted for fixed header & marquee */
+    background-color: var(--navy-800);
+    border-radius: 10px;
+    padding: 30px;
+    /* box-shadow: 0 0 20px rgba(0, 255, 255, 0.1); */
+}
+.container button{
+    border-radius: 50px;
+}
+.container button:hover{
+    background-color: #3bbad7;
+}
+
+h1 {
+    text-align: center;
+    color: var(--neon-blue);
+    font-size: 2.5em;
+    margin-bottom: 30px;
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+header h1 {
+    color: #fff;
+    font-size: 28px;
+    font-weight: 700;
+    margin-left: 20px;
+}
+
+/* Existing Styles */
+
+nav {
+    background: linear-gradient(to right, #4e8896, #1f3f6c); /* Gradient background */
+    padding: 8px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 30px;
+    transition: background 0.3s ease-in-out; /* Smooth transition for hover effect */
+}
+
+/* Hide menu items on mobile */
+nav ul {
+    display: flex;
+    list-style: none;
+    margin-top: 0;
+}
+
+nav ul li {
+    margin: 0 20px;
+}
+
+/* Hamburger Icon */
+.hamburger {
+    display: none; /* Hide by default */
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.hamburger div {
+    width: 30px;
+    height: 4px;
+    background-color: #fff;
+    transition: transform 0.3s ease;
+}
+
+/* Media Query for smaller screens */
+@media screen and (max-width: 768px) {
+    /* Show the hamburger menu */
+    .hamburger {
+        display: flex;
+    }
+
+    /* Hide the navigation items initially */
+    nav ul {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px; /* Adjust according to your header height */
+        right: 20px;
+        background-color: #00d2ff;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+        width: 200px;
+    }
+
+    /* Show the navigation items when the menu is toggled */
+    nav ul.active {
+        display: flex;
+    }
+
+    nav ul li {
+        margin: 15px 0;
+    }
+}
+
+/* Additional Styling for the Hamburger Menu */
+nav a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 0 20px;
+    font-weight: 500;
+    position: relative;
+    transition: all 0.3s ease-in-out; /* Smooth transition on hover */
+}
+
+nav a:hover {
+    transform: translateY(-5px); /* Slight upward movement on hover */
+}
+
+nav a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #fff; /* Neon Pink underline */
+    bottom: -5px;
+    left: 0;
+    transform: scaleX(0);
+    transition: transform 0.3s ease-in-out; /* Smooth scaling effect */
+}
+
+nav a:hover::after {
+    transform: scaleX(1); /* Underline appears on hover */
+}
+
+
+/* Add some padding to the nav container to make it look spacious */
+header {
+    padding: 10px 0;
+    height: 51px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(34, 129, 198, 0.2);
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-left: 3vh;
+}
+
+.header-logo img {
+    width: 90px; /* Set the size of the image */
+    height: 50px; /* Set the size of the image */
+    object-fit: cover; /* Ensure the image covers the circle */
+    transition: transform 0.3s ease-in-out; /* Smooth scaling effect */
+    margin-right: 0;
+    margin-bottom: 3vh;
+}
+
+.header-logo:hover img {
+    transform: scale(1.1); /* Slightly enlarge the image on hover */
+}
+
+.header-logo h1 {
+    color: #fff;
+    font-size: 28px;
+    font-weight: 700;
+    margin-left: -25px;
+}
